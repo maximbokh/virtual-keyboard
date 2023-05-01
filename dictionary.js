@@ -314,7 +314,7 @@ const dictionary = [
     row: 2,
   },
   {
-    code: 'KeyK',
+    code: 'Quote',
     keyEn: "'",
     keyRu: 'э',
     shiftEn: '"',
@@ -345,7 +345,7 @@ const dictionary = [
     row: 3,
   },
   {
-    code: 'KeyK',
+    code: 'KeyX',
     keyEn: 'x',
     keyRu: 'ч',
     keyCode: '88',
