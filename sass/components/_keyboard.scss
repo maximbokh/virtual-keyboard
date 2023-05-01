@@ -1,0 +1,59 @@
+.keyboard {
+  margin: 50px auto;
+  max-width: 1140px;
+  height: 20%;
+  padding: 7px;
+  background: $color-keyboard;
+  border-radius: 5px;
+
+}
+
+.row {
+  display: flex;
+}
+
+.keyboard__key {
+  height: 50px;
+  width: 70px;
+  border-radius: 4px;
+  border: none;
+  margin: 3px;
+  background-color: $color-key;
+  color: $color-keyboard-text;
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+
+.keyboard__key_backspace {
+  width: 145px;
+}
+
+.keyboard__key_capslock,
+.keyboard__key_shift-left {
+  width: 125px;
+}
+
+.keyboard__key_shift-right,
+.keyboard__key_enter {
+  width: 170px;
+}
+
+.keyboard__key_ctrl-right {
+  width: 95px;
+}
+
+.keyboard__key_space {
+  width: 502px;
+}
+
+.keyboard__key:hover {
+  background-color: $color-key-hover;
+}
+
+.keyboard__key:active {
+  background-color: $color-key-active;
+}
+
+.press {
+  background-color: $color-key-active;
+}
