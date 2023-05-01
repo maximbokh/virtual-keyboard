@@ -28,8 +28,19 @@ function createPage() {
     }
   }
 
+  function changeState(event) {
+    event.preventDefault();
+    const key = keyContainer.querySelector(`[data-code="${event.code}"]`);
+    if (key) {
+      keyboard.changeState(event.code);
+    }
+  }
+
   window.addEventListener('keydown', clickPhysButton);
   keyContainer.addEventListener('click', clickVirtButton);
+
+  window.addEventListener('keydown', changeState);
+  window.addEventListener('keyup', changeState);
 }
 
 window.addEventListener('load', createPage);

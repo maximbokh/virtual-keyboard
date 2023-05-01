@@ -30,6 +30,11 @@ class Keyboard {
     const textarea = document.querySelector('.textarea');
     textarea.value = `${textarea.value}${item.keyEn}`;
   }
+
+  changeState(code) {
+    const x = this.keyContainer.querySelector(`[data-code="${code}"]`);
+    x.classList.toggle('press');
+  }
 }
 
 export default Keyboard;
