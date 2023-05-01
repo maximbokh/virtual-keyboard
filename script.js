@@ -1,8 +1,9 @@
 import dictionary from './dictionary.js';
 import Keyboard from './keyboard.js';
 
-function createPage() {
+const createPage = () => {
   const body = document.querySelector('body');
+  body.classList.add('body');
 
   const textarea = document.createElement('textarea');
   textarea.classList.add('textarea');
@@ -10,31 +11,34 @@ function createPage() {
   const keyContainer = document.createElement('div');
   keyContainer.classList.add('keyboard');
   body.appendChild(keyContainer);
-
+  const description = document.createElement('p');
+  description.textContent = 'Клавиатура создана в операционной системе Windows. Для переключения языка нажмите клавиши: Left Ctrl +  Alt.';
+  description.classList.add('description');
+  body.appendChild(description);
   const keyboard = new Keyboard(dictionary, keyContainer);
 
-  function clickPhysButton(event) {
+  const clickPhysButton = (event) => {
     event.preventDefault();
     const key = keyContainer.querySelector(`[data-code="${event.code}"]`);
     if (key) {
       keyboard.clickButton(event.code, event.type);
     }
-  }
+  };
 
-  function clickVirtButton(event) {
-    const target = event.target;
-    if (target.tagName === 'BUTTON') {
-      keyboard.clickButton(target.dataset.code, event.type);
+  const clickVirtButton = (event) => {
+    const { target: current } = event;
+    if (current.tagName === 'BUTTON') {
+      keyboard.clickButton(current.dataset.code, event.type);
     }
-  }
+  };
 
-  function changeState(event) {
+  const changeState = (event) => {
     event.preventDefault();
     const key = keyContainer.querySelector(`[data-code="${event.code}"]`);
     if (key) {
       keyboard.changeState(event.code);
     }
-  }
+  };
 
   window.addEventListener('keydown', clickPhysButton);
   window.addEventListener('keyup', clickPhysButton);
@@ -43,6 +47,6 @@ function createPage() {
 
   window.addEventListener('keydown', changeState);
   window.addEventListener('keyup', changeState);
-}
+};
 
 window.addEventListener('load', createPage);

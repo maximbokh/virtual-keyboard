@@ -4,7 +4,8 @@ class Keyboard {
     this.keyContainer = keyContainer;
 
     this.createKeyboard();
-
+    this.currentLanguage = 'en';
+    this.press = [];
     this.caseState = false;
   }
 
@@ -22,11 +23,41 @@ class Keyboard {
       button.classList.add('keyboard__key');
       button.dataset.code = this.dictionary[i].code;
       document.querySelectorAll('.row')[rowCount].append(button);
+      this.addClass(this.dictionary[i].code);
+    }
+  }
+
+  addClass(code) {
+    const currentButton = this.keyContainer.querySelector(`[data-code="${code}"]`);
+    switch (code) {
+      case 'Backspace':
+        currentButton.classList.add('keyboard__key_backspace');
+        break;
+      case 'CapsLock':
+        currentButton.classList.add('keyboard__key_capslock');
+        break;
+      case 'ShiftLeft':
+        currentButton.classList.add('keyboard__key_shift-left');
+        break;
+      case 'ShiftRight':
+        currentButton.classList.add('keyboard__key_shift-right');
+        break;
+      case 'Enter':
+        currentButton.classList.add('keyboard__key_enter');
+        break;
+      case 'Space':
+        currentButton.classList.add('keyboard__key_space');
+        break;
+      case 'ControlRight':
+        currentButton.classList.add('keyboard__key_ctrl-right');
+        break;
+      default:
+        break;
     }
   }
 
   clickButton(code, type) {
-    const item = this.dictionary.find(value => value.code === code);
+    const item = this.dictionary.find((value) => value.code === code);
     const textarea = document.querySelector('.textarea');
     if (type !== 'keyup' && type !== 'mouseup') {
       if (this.caseState && !item.isAdvance) {
@@ -36,11 +67,33 @@ class Keyboard {
       }
     }
     this.checkButton(code, type);
+    this.changeLanguage(code, type);
   }
 
   changeState(code) {
     const x = this.keyContainer.querySelector(`[data-code="${code}"]`);
     x.classList.toggle('press');
+  }
+
+  setLanguage() {
+    localStorage.setItem('currentLanguage', this.currentLanguage);
+  }
+
+  changeLanguage(code, type) {
+    if (this.press.length === 2) {
+      this.press.length = 0;
+    }
+
+    this.press.push(code);
+    if (this.press.includes('AltLeft') && this.press.includes('ControlLeft') && type === 'keydown') {
+      if (this.currentLanguage === 'en') {
+        this.currentLanguage = 'ru';
+      } else {
+        this.currentLanguage = 'en';
+      }
+
+      this.setLanguage();
+    }
   }
 
   checkButton(code, type) {
