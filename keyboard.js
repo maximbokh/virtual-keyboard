@@ -28,12 +28,36 @@ class Keyboard {
   clickButton(code) {
     const item = this.dictionary.find(value => value.code === code);
     const textarea = document.querySelector('.textarea');
-    textarea.value = `${textarea.value}${item.keyEn}`;
+
+    if (this.caseState && !item.isAdvance) {
+      textarea.value = `${textarea.value}${item.keyEn.toUpperCase()}`;
+    } else {
+      textarea.value = `${textarea.value}${item.keyEn}`;
+    }
+    this.checkButton(code);
   }
 
   changeState(code) {
     const x = this.keyContainer.querySelector(`[data-code="${code}"]`);
     x.classList.toggle('press');
+  }
+
+  checkButton(code) {
+    if (code === 'CapsLock') {
+      this.changeCase();
+    }
+  }
+
+  changeCase() {
+    const mas = this.keyContainer.querySelectorAll('.keyboard__key');
+    this.caseState = !this.caseState;
+    for (let i = 0; i < mas.length; i += 1) {
+      if (this.caseState && !this.dictionary[i].isAdvance) {
+        mas[i].innerText = this.dictionary[i].keyEn.toUpperCase();
+      } else if (!this.dictionary[i].isAdvance) {
+        mas[i].innerText = this.dictionary[i].keyEn.toLowerCase();
+      }
+    }
   }
 }
 
