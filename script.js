@@ -17,14 +17,14 @@ function createPage() {
     event.preventDefault();
     const key = keyContainer.querySelector(`[data-code="${event.code}"]`);
     if (key) {
-      keyboard.clickButton(event.code);
+      keyboard.clickButton(event.code, event.type);
     }
   }
 
   function clickVirtButton(event) {
     const target = event.target;
     if (target.tagName === 'BUTTON') {
-      keyboard.clickButton(target.dataset.code);
+      keyboard.clickButton(target.dataset.code, event.type);
     }
   }
 
@@ -37,7 +37,9 @@ function createPage() {
   }
 
   window.addEventListener('keydown', clickPhysButton);
-  keyContainer.addEventListener('click', clickVirtButton);
+  window.addEventListener('keyup', clickPhysButton);
+  keyContainer.addEventListener('mousedown', clickVirtButton);
+  keyContainer.addEventListener('mouseup', clickVirtButton);
 
   window.addEventListener('keydown', changeState);
   window.addEventListener('keyup', changeState);
